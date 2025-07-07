@@ -1,0 +1,24 @@
+Procedimiento standby sucursales
+
+1- instalar la base de datos en el equipo que va a funcionar de standby (tiene que el mismo instalador del primario)
+2- agregar en el tns del primario los datos del standby
+3- copiar la carpeta standby en el primario y compartir
+4- en el primario ejecutar los siguientes script
+   4.1- primario.bat <suc> <carpeta>
+   4.2- backup_full.bat <suc>
+   4.3- backup.bat   <suc> <carpeta>
+5- en el standby ejecutar los siguientes script
+   5.1- standby.bat <suc> <carpeta>
+   5.2- restore.bat <suc> <carpeta>
+   5.3- standby_delete_archivelog <suc>
+
+6- tareas programadas primiario
+   6.1- backup_full <suc>   (mensual) 
+   6.2- backup_rman <suc> 0 (semanal)
+   6.3- backup_rman <suc> 1 (diario)
+   6.4- backup.bat  <suc> <carpeta> (cada 10 min)
+   6.5- backup_archivelog <suc> <carpeta> (cada hora)
+   
+7- tareas programadas standby
+   7.1- restore.bat <suc> <carpeta>
+   7.2- standby_delete_archivelog <suc>
