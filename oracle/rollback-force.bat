@@ -1,6 +1,10 @@
 @echo off
 setlocal
 
+::
+:: formato sucursales.txt
+:: <usuario>/<clave>@<base de datos>
+::
 for /f "tokens=*" %%a in (sucursales.txt) do (
   for /f "tokens=2 delims=@" %%b in ("%%a") do (
     echo Procesando %%b
@@ -18,3 +22,4 @@ for /f "tokens=*" %%a in (sucursales.txt) do (
  echo exit; >> %tmp%\rollback.sql
  sqlplus %%a @%tmp%\rollback.sql
 )
+
